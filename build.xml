@@ -1,0 +1,68 @@
+<project name="Lox" default="run" basedir=".">
+    <description>
+        A opengl test project 
+    </description>
+    <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="target"/>
+
+    <!-- include all jars in the lib directory and all sub-directories -->
+    
+
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}/classes"/>
+    </target>
+
+    <target name="compile" depends="init" description="compile the source">
+        <javac srcdir="${src}/interpreters" debug="true" destdir="${build}/classes">
+            <classpath>
+                <fileset dir="lib" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/artifact.jar" basedir="${build}/classes">
+            <manifest>
+                <attribute name="Main-Class" value="interpreters.Lox"/>
+            </manifest>
+            <zipgroupfileset dir="lib" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+
+
+    <target name="compile-printer" depends="init" description="compile the source">
+        <javac  sourcepath="" srcdir="${src}/interpreters" debug="true" destdir="${build}/classes">
+            <include name="AstPrinter.java"/>
+            <include name="Expr.java"/>
+            <include name="Scanner.java"/>
+            <include name="Token.java"/>
+            <include name="TokenType.java"/>
+        </javac>
+        <!--
+
+        -->
+    </target>
+
+    <target name="jar-printer" depends="compile-printer">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/artifact.jar" basedir="${build}/classes">
+            <manifest>
+                <attribute name="Main-Class" value="interpreters.AstPrinter"/>
+            </manifest>
+            <zipgroupfileset dir="lib" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+    <target name="run-printer" depends="jar-printer">
+        <java jar="${build}/artifact.jar" fork="true"/>
+    </target>
+    <target name="run" depends="jar">
+        <java jar="${build}/artifact.jar" fork="true"/>
+    </target>
+</project>
