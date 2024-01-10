@@ -36,6 +36,28 @@
 
 
 
+    <target name="compile-tool" depends="init" description="compile the source">
+        <javac  sourcepath="" srcdir="${src}/tool" debug="true" destdir="${build}/classes">
+            <include name="GenerateAst.java"/>
+        </javac>
+        <!--
+
+        -->
+    </target>
+
+    <target name="jar-tool" depends="compile-tool">
+        <mkdir dir="${build}/jar"/>
+        <jar destfile="${build}/artifact.jar" basedir="${build}/classes">
+            <manifest>
+                <attribute name="Main-Class" value="tool.GenerateAst"/>
+            </manifest>
+            <zipgroupfileset dir="lib" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+    <target name="run-tool" depends="jar-tool">
+        <java jar="${build}/artifact.jar" fork="true"/>
+    </target>
     <target name="compile-printer" depends="init" description="compile the source">
         <javac  sourcepath="" srcdir="${src}/interpreters" debug="true" destdir="${build}/classes">
             <include name="AstPrinter.java"/>
@@ -65,4 +87,5 @@
     <target name="run" depends="jar">
         <java jar="${build}/artifact.jar" fork="true"/>
     </target>
+
 </project>

@@ -175,7 +175,6 @@ class Scanner {
 
         addToken(NUMBER,
                 Double.parseDouble(source.substring(start, current)));
-        System.out.println("actuall: " + source.substring(start, current));
     }
 
     private boolean match(char expected) {
