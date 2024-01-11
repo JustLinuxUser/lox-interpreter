@@ -1,8 +1,22 @@
 package interpreters;
 
 import interpreters.Expr;
+import interpreters.Expr.Assign;
+import interpreters.Expr.Variable;
 
 class AstPrinter implements Expr.Visitor<String> {
+
+    @Override
+    public String visitAssignExpr(Assign expr) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String visitVariableExpr(Variable expr) {
+        return null;
+    }
+
     String print(Expr expr) {
         return expr.accept(this);
     }
