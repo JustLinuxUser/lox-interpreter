@@ -169,6 +169,13 @@ class Interpreter implements Expr.Visitor<Object>,
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
+        System.out.print(stringify(value));
+        return null;
+    }
+
+    @Override
+    public Void visitPrintlnStmt(Stmt.Println stmt) {
+        Object value = evaluate(stmt.expression);
         System.out.println(stringify(value));
         return null;
     }

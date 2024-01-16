@@ -49,6 +49,8 @@ class Parser {
             return ifStatement();
         if (match(PRINT))
             return printStatement();
+        if (match(PRINTLN))
+            return printlnStatement();
         if (match(LEFT_BRACE))
             return new Stmt.Block(block());
 
@@ -59,6 +61,12 @@ class Parser {
         Expr value = expression();
         consume(SEMICOLON, "Expect ';' after value.");
         return new Stmt.Print(value);
+    }
+
+    private Stmt printlnStatement() {
+        Expr value = expression();
+        consume(SEMICOLON, "Expect ';' after value.");
+        return new Stmt.Println(value);
     }
 
     private Stmt ifStatement() {

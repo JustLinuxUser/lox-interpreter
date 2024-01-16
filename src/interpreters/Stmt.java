@@ -12,6 +12,7 @@ abstract class Stmt {
     R visitExpressionStmt(Expression stmt);
     R visitIfStmt(If stmt);
     R visitPrintStmt(Print stmt);
+    R visitPrintlnStmt(Println stmt);
     R visitVarStmt(Var stmt);
   }
   static class Block extends Stmt {
@@ -62,6 +63,18 @@ abstract class Stmt {
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitPrintStmt(this);
+    }
+
+    final Expr expression;
+  }
+  static class Println extends Stmt {
+    Println(Expr expression) {
+      this.expression = expression;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitPrintlnStmt(this);
     }
 
     final Expr expression;
